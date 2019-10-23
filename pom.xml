@@ -15,9 +15,20 @@
         <module>security-browser</module>
     </modules>
 
+    <properties>
+        <security.version>1.0-SNAPSHOT</security.version>
+    </properties>
+
     <dependencyManagement>
 
         <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>2.2.0.M4</version>
+                <scope>compile</scope>
+            </dependency>
             <dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
@@ -37,7 +48,6 @@
     </dependencyManagement>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
