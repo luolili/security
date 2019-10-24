@@ -24,12 +24,6 @@
         <dependencies>
 
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-autoconfigure</artifactId>
-                <version>2.2.0.M4</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
                 <version>Brussels-SR4</version>
