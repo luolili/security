@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @RunWith(SpringRunner.class)
@@ -68,6 +70,23 @@ public class UserControllerTest {
         String content = "{\"username\":\"hu\",\"birthday\":" + time + "}";
         // 发出 post req,必须加contentType ,否则415
         String s = mockMvc.perform(MockMvcRequestBuilders.post("/user").contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(content))
+                // req 期望的 result,status code:200
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"))
+                .andReturn().getResponse().getContentAsString();
+        // {"id":1,"username":"hu","password":null,"birthday":1572004175181}
+        System.out.println(s);
+
+    }
+
+    @Test
+    public void whenUpdateSuccess() throws Exception {
+        Date date = new Date(LocalDateTime.now().plusYears(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        long time = date.getTime();//传 timestamp
+        String content = "{\"id\":\"1\",\"username\":\"hu\",\"birthday\":" + time + "}";
+        // 发出 post req,必须加contentType ,否则415
+        String s = mockMvc.perform(MockMvcRequestBuilders.put("/user/1").contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(content))
                 // req 期望的 result,status code:200
                 .andExpect(MockMvcResultMatchers.status().isOk())

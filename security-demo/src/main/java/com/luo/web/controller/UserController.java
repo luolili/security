@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.luo.dto.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,23 @@ import java.util.List;
 public class UserController {
 
     @PostMapping
-    public User create(@RequestBody User user) {
+    public User create(@RequestBody @Valid User user, BindingResult errors) {
+        //err report
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(e -> System.out.println(e.getDefaultMessage()));
+        }
+        user.setId(1);
+        System.out.println(user.getUsername());
+        System.out.println(user.getBirthday());//Fri Oct 25 19:49:35 CST 2019
+        return user;
+    }
+
+    @PutMapping("{id}")
+    public User update(@RequestBody @Valid User user, BindingResult errors) {
+        //err report
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(e -> System.out.println(e.getDefaultMessage()));
+        }
         user.setId(1);
         System.out.println(user.getUsername());
         System.out.println(user.getBirthday());//Fri Oct 25 19:49:35 CST 2019

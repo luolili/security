@@ -1,12 +1,18 @@
 package com.luo.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.luo.validator.MyConstraint;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 /**
  * 必须 加getter
  * https://blog.csdn.net/noob9527/article/details/86639911
+ *
+ * @DecimaMax 最大数值
+ * @Digits
  */
 public class User {
     public interface UserSimpleView {
@@ -17,11 +23,14 @@ public class User {
 
     }
 
+    //@MyConstraint(message = "this is  a test")
     private Integer id;
 
+    @NotBlank
     private String username;
     private String password;
-    //如何接受Date 类型参数：
+    //如何接受Date 类型参数：前台 传 时间戳
+    @Past(message = "birthday必须是过去的时间")
     private Date birthday;
 
     @JsonView(UserDetailView.class)
