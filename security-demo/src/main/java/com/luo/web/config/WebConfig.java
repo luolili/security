@@ -1,16 +1,20 @@
 package com.luo.web.config;
 
 import com.luo.web.filter.TimeFilter;
+import com.luo.web.interceptor.TimeHandlerInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //注册 bean
 @Configuration
-public class WebConfig {
+public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public FilterRegistrationBean timeFilter() {
@@ -21,5 +25,13 @@ public class WebConfig {
         urls.add("/*");//过滤 的 paths
         filterRegistrationBean.setUrlPatterns(urls);
         return filterRegistrationBean;
+    }
+
+    @Autowired
+    private TimeHandlerInterceptor timeHandlerInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(timeHandlerInterceptor);
     }
 }
