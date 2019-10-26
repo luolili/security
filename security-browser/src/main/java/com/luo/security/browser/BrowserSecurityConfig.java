@@ -56,13 +56,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 访问user-signIn.html 不需要认证
                 .antMatchers("/authentication/require",
-                        securityProperties.getBrowserProperties().getLoginPage()).permitAll()
+                        securityProperties.getBrowserProperties().getLoginPage(),
+                        "/code/image").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 //Could not verify the provided CSRF token because your session was not found.
                 .csrf().disable();//认证：表单验证
-
 
     }
 
