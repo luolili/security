@@ -1,5 +1,7 @@
 package com.luo.security.browser;
 
+import com.luo.core.properties.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -29,14 +34,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
                 //Could not verify the provided CSRF token because your session was not found.
         .csrf().disable();//认证：表单验证
-
-
     }
     */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //所有的请求 都需要身份 认证
         http.formLogin()
                 //跳转到自定义的 login 页面，返回登陆页面 or json
                 .loginPage("/authentication/require")
@@ -44,7 +46,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 访问user-signIn.html 不需要认证
-                .antMatchers("/authentication/require").permitAll()
+                .antMatchers("/authentication/require",
+                        securityProperties.getBrowserProperties().getLoginPage()).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
