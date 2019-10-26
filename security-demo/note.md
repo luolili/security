@@ -3,3 +3,5 @@
  set the 'spring.session.store-type' property
  
  spring.session.store-type=none
+ 
+ 2.Unknown system variable 'tx_isolation'
