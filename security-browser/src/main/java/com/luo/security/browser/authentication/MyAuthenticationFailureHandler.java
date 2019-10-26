@@ -37,6 +37,7 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
             response.getWriter().write(objectMapper.writeValueAsString(exception));
         } else {
             super.onAuthenticationFailure(request, response, exception);
+            return;
         }
 
     }
