@@ -31,6 +31,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("username:" + username);
+        //每次 生成的密码 都不一样
         return new User(username, passwordEncoder.encode("123"), true, true, true, true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
