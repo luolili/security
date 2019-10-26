@@ -2,6 +2,7 @@ package com.luo.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.luo.validator.MyConstraint;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Past;
@@ -27,6 +28,7 @@ public class User {
     private Integer id;
 
     @NotBlank
+    @ApiModelProperty(value = "姓名")
     private String username;
     private String password;
     //如何接受Date 类型参数：前台 传 时间戳

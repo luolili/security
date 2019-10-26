@@ -2,6 +2,8 @@ package com.luo.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.luo.dto.User;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    @ApiOperation(value = "创建用户")
     @PostMapping
     public User create(@RequestBody @Valid User user, BindingResult errors) {
         //err report
@@ -57,7 +60,7 @@ public class UserController {
     //@RequestMapping(value = "/user/{id:\\d+}", method = RequestMethod.GET)
     @GetMapping("/{id}")
     @JsonView(User.UserSimpleView.class)//展示密码
-    public User getUSer(@PathVariable String id) {
+    public User getUSer(@ApiParam(value = "用户id") @PathVariable String id) {
         User user = new User();
         user.setUsername("hu");
         return user;
