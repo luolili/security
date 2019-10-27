@@ -42,7 +42,7 @@ public class ValidateCodeController {
     @RequestMapping("/code/sms")
     public void createSmsCode(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         ValidateCode smsCode = smsCodeGenerator.generate(req);
-        sessionStrategy.setAttribute(new ServletWebRequest(req), SESSION_KEY, smsCode);
+        sessionStrategy.setAttribute(new ServletWebRequest(req), SESSION_KEY + "sms", smsCode);
         String mobile = ServletRequestUtils.getStringParameter(req, "mobile");
         smsCodeSender.send(mobile, smsCode.getCode());
     }

@@ -108,7 +108,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             sessionStrategy.removeAttribute(servletWebRequest, ValidateCodeController.SESSION_KEY);
             throw new ValidateCodeException("code   expired");
         }
-        if (StringUtils.equals(codeInRequest, codeInSession.getCode())) {
+        if (!StringUtils.equals(codeInRequest, codeInSession.getCode())) {
             throw new ValidateCodeException("code  not right");
         }
         sessionStrategy.removeAttribute(servletWebRequest, ValidateCodeController.SESSION_KEY);

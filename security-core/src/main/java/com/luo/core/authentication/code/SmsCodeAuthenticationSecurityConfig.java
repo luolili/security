@@ -1,6 +1,7 @@
 package com.luo.core.authentication.code;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * app/b 都要用
  */
+@Configuration
 public class SmsCodeAuthenticationSecurityConfig extends
         SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 

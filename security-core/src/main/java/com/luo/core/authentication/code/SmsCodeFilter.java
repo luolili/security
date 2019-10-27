@@ -1,7 +1,6 @@
 package com.luo.core.authentication.code;
 
 import com.luo.core.properties.SecurityProperties;
-import com.luo.core.validation.code.ImageCode;
 import com.luo.core.validation.code.ValidateCode;
 import com.luo.core.validation.code.ValidateCodeController;
 import com.luo.core.validation.code.ValidateCodeException;
@@ -20,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +40,7 @@ public class SmsCodeFilter extends OncePerRequestFilter implements InitializingB
         super.afterPropertiesSet();
         String url = securityProperties.getCode().getSms().getUrl();
         String[] curls = StringUtils.splitByWholeSeparatorPreserveAllTokens(url, ",");
-        urls.addAll(Arrays.asList(curls));
+        //urls.addAll(Arrays.asList(curls));
         urls.add("/authentication/mobile");
 
     }
@@ -111,7 +109,7 @@ public class SmsCodeFilter extends OncePerRequestFilter implements InitializingB
             sessionStrategy.removeAttribute(servletWebRequest, ValidateCodeController.SESSION_KEY);
             throw new ValidateCodeException("code   expired");
         }
-        if (StringUtils.equals(codeInRequest, codeInSession.getCode())) {
+        if (!StringUtils.equals(codeInRequest, codeInSession.getCode())) {
             throw new ValidateCodeException("code  not right");
         }
         sessionStrategy.removeAttribute(servletWebRequest, ValidateCodeController.SESSION_KEY);

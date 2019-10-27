@@ -2,7 +2,7 @@ package com.luo.core.properties;
 
 public class SmsCodeProperties {
     private int length = 4;
-    private int expireIn = 3;
+    private int expireIn = 360;
     private String url;
 
     public int getLength() {

@@ -41,7 +41,6 @@ public class BrowserSecurityController {
             }
         }
 
-
         return new SimpleResponse("需要身份认证");
     }
 
