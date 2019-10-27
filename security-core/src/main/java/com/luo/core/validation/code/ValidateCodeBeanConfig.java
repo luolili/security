@@ -1,6 +1,8 @@
 package com.luo.core.validation.code;
 
 import com.luo.core.properties.SecurityProperties;
+import com.luo.core.validation.code.sms.DefaultSmsCodeSender;
+import com.luo.core.validation.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +23,12 @@ public class ValidateCodeBeanConfig {
         ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;
+    }
+
+    @Bean
+    //当spring 可以找到 imageCodeGenerator 这个 bean 的时候，就不会执行这个方法里面 的代码
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender() {
+        return new DefaultSmsCodeSender();
     }
 }

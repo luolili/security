@@ -54,16 +54,16 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     */
 
-    @Autowired
-    DataSource dataSource;
+//    @Autowired
+//    DataSource dataSource;
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        tokenRepository.setDataSource(dataSource);
-        tokenRepository.setCreateTableOnStartup(true);
-        return tokenRepository;
-    }
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+//        tokenRepository.setDataSource(dataSource);
+//        tokenRepository.setCreateTableOnStartup(true);//创建了之后不能再建
+//        return tokenRepository;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -81,11 +81,12 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authentication/form")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler)
-                .and()
-                .rememberMe()
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(rememberMeSeconds)
-                .userDetailsService(userDetailsService)
+
+//                .and()
+//                .rememberMe()
+//                .tokenRepository(persistentTokenRepository())
+//                .tokenValiditySeconds(rememberMeSeconds)
+//                .userDetailsService(userDetailsService)
 
                 .and()
                 .authorizeRequests()

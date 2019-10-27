@@ -1,6 +1,7 @@
 package com.luo.core.validation.code;
 
 import com.luo.core.properties.SecurityProperties;
+import com.luo.core.validation.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
@@ -28,13 +29,26 @@ public class ValidateCodeController {
 
     @Autowired
     private ValidateCodeGenerator imageCodeGenerator;
+    @Autowired
+    private ValidateCodeGenerator smsCodeGenerator;
+
+    @Autowired
+    private SmsCodeSender smsCodeSender;
+
     @RequestMapping("/code/image")
     public void createCode(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        ImageCode imageCode = imageCodeGenerator.generate(req);
+        ImageCode imageCode = (ImageCode) imageCodeGenerator.generate(req);
         sessionStrategy.setAttribute(new ServletWebRequest(req), SESSION_KEY, imageCode);
         ImageIO.write(imageCode.getImage(), "JPEG", resp.getOutputStream());
 
     }
 
+    @RequestMapping("/code/sms")
+    public void createSmsCode(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        ValidateCode smsCode = smsCodeGenerator.generate(req);
+        sessionStrategy.setAttribute(new ServletWebRequest(req), SESSION_KEY, smsCode);
+        String mobile = ServletRequestUtils.getStringParameter(req, "mobile");
+        smsCodeSender.send(mobile, smsCode.getCode());
+    }
 
 }
