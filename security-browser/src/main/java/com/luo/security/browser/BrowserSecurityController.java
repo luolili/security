@@ -1,5 +1,4 @@
 package com.luo.security.browser;
-
 import com.luo.core.properties.SecurityProperties;
 import com.luo.security.browser.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 @RestController
 public class BrowserSecurityController {

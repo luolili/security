@@ -34,7 +34,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Dalston.SR2</version>
+                <version>Dalston.SR2</version><!-- 2.0.x boot-->
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

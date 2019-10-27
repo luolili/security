@@ -1,9 +1,9 @@
 package com.luo.core.properties;
 
 public class ImageCodeProperties {
-    private int width;
-    private int height;
-    private int length;
+    private int width = 50;
+    private int height = 20;
+    private int length = 3;
     private int expireIn = 60;
 
     private String url;
