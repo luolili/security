@@ -1,5 +1,7 @@
 package com.luo.security.browser;
 
+import com.luo.core.authentication.code.SmsCodeAuthenticationSecurityConfig;
+import com.luo.core.authentication.code.SmsCodeFilter;
 import com.luo.core.properties.SecurityProperties;
 import com.luo.core.validation.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,10 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsService userDetailsService;
+    @Autowired
+    SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -72,8 +78,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         validateCodeFilter.setSecurityProperties(securityProperties);
         validateCodeFilter.afterPropertiesSet();
 
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);
+        smsCodeFilter.afterPropertiesSet();
         int rememberMeSeconds = securityProperties.getBrowserProperties().getRememberMeSeconds();
         http
+                .addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 //跳转到自定义的 login 页面，返回登陆页面 or json
@@ -93,12 +104,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 访问user-signIn.html 不需要认证
                 .antMatchers("/authentication/require",
                         securityProperties.getBrowserProperties().getLoginPage(),
-                        "/code/image").permitAll()
+                        "/code/*").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 //Could not verify the provided CSRF token because your session was not found.
-                .csrf().disable();//认证：表单验证
+                .csrf().disable()
+                .apply(smsCodeAuthenticationSecurityConfig);//认证：表单验证
 
     }
 

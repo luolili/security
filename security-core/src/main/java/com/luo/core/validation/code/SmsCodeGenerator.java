@@ -4,12 +4,8 @@ import com.luo.core.properties.SecurityProperties;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.Random;
 
 @Component("smsCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
