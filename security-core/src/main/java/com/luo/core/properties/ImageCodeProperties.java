@@ -1,21 +1,12 @@
 package com.luo.core.properties;
 
-public class ImageCodeProperties {
+public class ImageCodeProperties extends SmsCodeProperties {
     private int width = 50;
     private int height = 20;
-    private int length = 3;
-    private int expireIn = 60;
 
-    private String url;
-
-    public String getUrl() {
-        return url;
+    public ImageCodeProperties() {
+        setLength(4);
     }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -32,19 +23,4 @@ public class ImageCodeProperties {
         this.height = height;
     }
 
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getExpireIn() {
-        return expireIn;
-    }
-
-    public void setExpireIn(int expireIn) {
-        this.expireIn = expireIn;
-    }
 }

@@ -26,7 +26,37 @@
         </tr>
 
         <tr>
+            <td colspan="3"><input name="remember-me" type="checkbox" value="true">记住我</td>
+        </tr>
 
+        <tr>
+
+            <td colspan="3">
+                <button type="submit"/>
+                login
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+
+<h2>sms登陆:</h2>
+<form method="post" action="/authentication/mobile">
+    <table>
+        <tr>
+            <td>手机号</td>
+            <td><input name="mobile" type="text"></td>
+        </tr>
+
+
+        <tr>
+            <td>短信验证码</td>
+            <td><input name="smsCode" type="text"/>
+                <a href="/code/sms?mobile=12">send code</a></td>
+        </tr>
+
+        <tr>
             <td colspan="3"><input name="remember-me" type="checkbox" value="true">记住我</td>
         </tr>
 
