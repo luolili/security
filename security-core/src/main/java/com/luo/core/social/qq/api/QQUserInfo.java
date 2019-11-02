@@ -10,6 +10,15 @@ public class QQUserInfo {
     private String figureurl_qq_1;
     private String figureurl_qq_2;
     private String gender;
+    private String openId;
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 
     public String getRet() {
         return ret;
