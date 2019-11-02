@@ -117,8 +117,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .and()
                 .logout()
-                .logoutUrl("/signOut")
+                //.logoutUrl("/signOut")
                 .logoutSuccessUrl("/user-logout.html")
+                .deleteCookies("JSESSIONID")
                 .and()
                 .authorizeRequests()
                 // 访问user-signIn.html 不需要认证
@@ -126,7 +127,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                         securityProperties.getBrowserProperties().getLoginPage(),
                         "/code/*",
                         securityProperties.getBrowserProperties().getSignUpUrl(),
-                        "/user/regist", "/session/invalid").permitAll()
+                        "/user/regist", "/session/invalid", "/user-logout.html").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
