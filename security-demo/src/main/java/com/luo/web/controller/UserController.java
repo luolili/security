@@ -4,11 +4,17 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.luo.dto.User;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +70,21 @@ public class UserController {
         User user = new User();
         user.setUsername("hu");
         return user;
+    }
+
+    @GetMapping("/me")
+    public Object me(@AuthenticationPrincipal UserDetails user) {
+        return user;
+    }
+
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
+
+    @PostMapping("/regist")
+    public void regist(User user, HttpServletRequest req) {
+        //get user id 插入user_connection 表
+        String userId = user.getUsername();
+        //从 session 里面获取 user info
+        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(req));
     }
 }

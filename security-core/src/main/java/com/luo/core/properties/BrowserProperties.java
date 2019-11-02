@@ -2,6 +2,7 @@ package com.luo.core.properties;
 
 public class BrowserProperties {
     private String loginPage = "/user-signIn.html";
+    private String signUpUrl = "/user-signUp.html";
 
     private LoginType loginType = LoginType.JSON;//默认 json
 
@@ -13,6 +14,14 @@ public class BrowserProperties {
 
     public void setRememberMeSeconds(int rememberMeSeconds) {
         this.rememberMeSeconds = rememberMeSeconds;
+    }
+
+    public String getSignUpUrl() {
+        return signUpUrl;
+    }
+
+    public void setSignUpUrl(String signUpUrl) {
+        this.signUpUrl = signUpUrl;
     }
 
     public String getLoginPage() {
