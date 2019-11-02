@@ -34,7 +34,8 @@ public class ValidateCodeController {
     @RequestMapping("/code/image")
     public void createCode(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         ImageCode imageCode = (ImageCode) imageCodeGenerator.generate(req);
-        sessionStrategy.setAttribute(new ServletWebRequest(req), SESSION_KEY, imageCode);
+        ValidateCode code = new ValidateCode(imageCode.getCode(), imageCode.getExpireTime());
+        sessionStrategy.setAttribute(new ServletWebRequest(req), SESSION_KEY, code);
         ImageIO.write(imageCode.getImage(), "JPEG", resp.getOutputStream());
 
     }
@@ -42,6 +43,7 @@ public class ValidateCodeController {
     @RequestMapping("/code/sms")
     public void createSmsCode(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         ValidateCode smsCode = smsCodeGenerator.generate(req);
+        //session 里面保存的只是数字，没有BufferedImage:没有实现Serializable
         sessionStrategy.setAttribute(new ServletWebRequest(req), SESSION_KEY + "sms", smsCode);
         String mobile = ServletRequestUtils.getStringParameter(req, "mobile");
         smsCodeSender.send(mobile, smsCode.getCode());

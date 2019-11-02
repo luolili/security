@@ -1,8 +1,10 @@
 package com.luo.core.validation.code;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ValidateCode {
+//放入 redis 的对象以及对象里面的属性 必须 Serializable
+public class ValidateCode implements Serializable {
     private String code;
     private LocalDateTime expireTime;
 

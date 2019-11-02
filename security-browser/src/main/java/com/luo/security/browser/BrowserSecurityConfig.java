@@ -106,6 +106,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidSessionUrl("/session/invalid")
                 //后面产生的session 覆盖前面的session
                 .maximumSessions(1)
+                //Authentication Failed: Maximum sessions of 1 for this principal exceeded
+                //只允许登陆一次：在一个browser上登陆了，在其他的browser就不可登陆
                 .maxSessionsPreventsLogin(true)
                 .expiredSessionStrategy(new MyExpiredSessionStrategy())
                 .and()

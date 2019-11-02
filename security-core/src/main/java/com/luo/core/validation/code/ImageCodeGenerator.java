@@ -24,28 +24,28 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
         Random random = new Random();
-        g.setColor(Color.GRAY);// 设置边框色
-        g.fillRect(0, 0, width, height);
-        g.setFont(new Font("Time New Roman", Font.ITALIC, 20));
+
         g.setColor(getRandColor(200, 250));
-        for (int i = 0; i < 20; i++) {
+        g.fillRect(0, 0, width, height);
+        g.setFont(new Font("Times New Roman", Font.ITALIC, 20));
+        g.setColor(getRandColor(160, 200));
+        for (int i = 0; i < 155; i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
             int xl = random.nextInt(12);
             int yl = random.nextInt(12);
-            g.drawLine(x, y, xl, yl);
+            g.drawLine(x, y, x + xl, y + yl);
         }
+
         String sRand = "";
-        for (int i = 0; i < defaultLen; i++) {
-            String rand = String.valueOf(random);
+        for (int i = 0; i < securityProperties.getCode().getImage().getLength(); i++) {
+            String rand = String.valueOf(random.nextInt(10));
             sRand += rand;
-            int d = random.nextInt(255);
-            Color c = new Color(d, d, d);
-            g.setColor(c);
+            g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
             g.drawString(rand, 13 * i + 6, 16);
         }
-        g.dispose();
 
+        g.dispose();
         return new ImageCode(image, sRand, defaultExpireIn);
     }
 
