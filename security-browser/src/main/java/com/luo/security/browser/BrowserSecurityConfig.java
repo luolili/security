@@ -15,10 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
-import javax.sql.DataSource;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -36,7 +33,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
-
+    //引入 其他模块的配置
+    @Autowired
+    private SpringSocialConfigurer socialConfig;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -98,6 +97,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .tokenRepository(persistentTokenRepository())
 //                .tokenValiditySeconds(rememberMeSeconds)
 //                .userDetailsService(userDetailsService)
+
+                .and()
+                .apply(socialConfig)
 
                 .and()
                 .authorizeRequests()
