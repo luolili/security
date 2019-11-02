@@ -4,6 +4,7 @@ import com.luo.core.authentication.code.SmsCodeAuthenticationSecurityConfig;
 import com.luo.core.authentication.code.SmsCodeFilter;
 import com.luo.core.properties.SecurityProperties;
 import com.luo.core.validation.code.ValidateCodeFilter;
+import com.luo.security.browser.session.MyExpiredSessionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -100,7 +101,14 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .apply(socialConfig)
-
+                .and()
+                .sessionManagement()
+                .invalidSessionUrl("/session/invalid")
+                //后面产生的session 覆盖前面的session
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
+                .expiredSessionStrategy(new MyExpiredSessionStrategy())
+                .and()
                 .and()
                 .authorizeRequests()
                 // 访问user-signIn.html 不需要认证
@@ -108,7 +116,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                         securityProperties.getBrowserProperties().getLoginPage(),
                         "/code/*",
                         securityProperties.getBrowserProperties().getSignUpUrl(),
-                        "/user/regist").permitAll()
+                        "/user/regist", "/session/invalid").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
