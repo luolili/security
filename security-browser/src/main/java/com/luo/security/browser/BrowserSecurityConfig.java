@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
@@ -28,6 +29,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired
     private AuthenticationFailureHandler myAuthenticationFailureHandler;
+
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -107,10 +111,14 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 //后面产生的session 覆盖前面的session
                 .maximumSessions(1)
                 //Authentication Failed: Maximum sessions of 1 for this principal exceeded
-                //只允许登陆一次：在一个browser上登陆了，在其他的browser就不可登陆
+                //只允许登陆一次：在一个browser上登陆了，在其他的browser就不可登陆;并发量
                 .maxSessionsPreventsLogin(true)
                 .expiredSessionStrategy(new MyExpiredSessionStrategy())
                 .and()
+                .and()
+                .logout()
+                .logoutUrl("/signOut")
+                .logoutSuccessUrl("/user-logout.html")
                 .and()
                 .authorizeRequests()
                 // 访问user-signIn.html 不需要认证
