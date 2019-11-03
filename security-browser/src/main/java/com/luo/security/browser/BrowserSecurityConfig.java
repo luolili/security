@@ -41,10 +41,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     //引入 其他模块的配置
     @Autowired
     private SpringSocialConfigurer socialConfig;
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
     /*@Override
     protected void configure(HttpSecurity http) throws Exception {
         //所有的请求 都需要身份 认证

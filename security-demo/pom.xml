@@ -14,12 +14,19 @@
 
     <dependencies>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.luo</groupId>
             <artifactId>security-browser</artifactId>
+            &lt;!&ndash; version control&ndash;&gt;
+            <version>${security.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.luo</groupId>
+            <artifactId>security-app</artifactId>
             <!-- version control-->
             <version>${security.version}</version>
         </dependency>
+
 
         <!-- test case-->
         <dependency>

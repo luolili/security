@@ -1,4 +1,4 @@
-package com.luo.security.browser.support;
+package com.luo.core.support;
 
 public class SimpleResponse {
     private Object content;

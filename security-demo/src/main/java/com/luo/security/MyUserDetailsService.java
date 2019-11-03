@@ -34,7 +34,8 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         logger.info("username:" + username);//表单登陆
         //每次 生成的密码 都不一样
         return new User(username, passwordEncoder.encode("123"), true, true, true, true,
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+                //ROLE_USER 认证 服务器的时候加，否则Access is denied，type=Forbidden, status=403
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER"));
 
     }
 

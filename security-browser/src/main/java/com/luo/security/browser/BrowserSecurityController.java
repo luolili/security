@@ -1,6 +1,6 @@
 package com.luo.security.browser;
 import com.luo.core.properties.SecurityProperties;
-import com.luo.security.browser.support.SimpleResponse;
+import com.luo.core.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
