@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,6 @@ import java.io.IOException;
 @Component("myAuthenticationSuccessHandler")
 public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
         //implements AuthenticationSuccessHandler
-
 
 {
 
@@ -37,7 +35,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 
         logger.info("login success");
         if (LoginType.JSON.equals(securityProperties.getBrowserProperties().getLoginType())) {
-            response.setContentType("aplication/json;charset=UTF-8");
+            response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(authentication));
         } else {
             //默认的方式：继续道 call 接口
